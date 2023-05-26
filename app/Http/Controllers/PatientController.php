@@ -5,16 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Response;
 use App\Models\Patient;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class PatientController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(): Response
+    public function index(): View
     {
         //
-        return response('Hello, World!');
+        return view('patient.index');
     }
 
     /**
