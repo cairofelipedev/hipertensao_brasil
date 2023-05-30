@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use App\Models\Patient;
 use Illuminate\Http\Request;
@@ -29,9 +30,15 @@ class PatientController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
-        //
+        $validated = $request->validate([
+            'nome' => 'required|string|max:255',
+        ]);
+ 
+        $request->user()->patients()->create($validated);
+ 
+        return redirect(route('pacientes.index'));
     }
 
     /**

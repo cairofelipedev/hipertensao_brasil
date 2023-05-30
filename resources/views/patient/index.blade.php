@@ -3,10 +3,10 @@
         <form method="POST" action="{{ route('pacientes.store') }}">
             @csrf
             <textarea
-                name="message"
+                name="nome"
                 placeholder="{{ __('Nome Completo') }}"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-            >{{ old('message') }}</textarea>
+            >{{ old('nome') }}</textarea>
             <x-input-error :messages="$errors->get('message')" class="mt-2" />
             <x-primary-button class="mt-4">{{ __('Paciente') }}</x-primary-button>
         </form>
