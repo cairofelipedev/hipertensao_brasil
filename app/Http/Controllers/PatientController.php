@@ -16,7 +16,9 @@ class PatientController extends Controller
     public function index(): View
     {
         //
-        return view('patient.index');
+        return view('patient.index', [
+            'patients' => Patient::with('user')->latest()->get(),
+        ]);
     }
 
     /**

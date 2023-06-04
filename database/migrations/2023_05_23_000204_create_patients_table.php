@@ -15,6 +15,15 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('nome');
+            $table->integer('idade');
+            $table->enum('sexo', ['M', 'F']);
+            $table->enum('tabagismo', ['sim', 'nao']);
+            $table->enum('diabetes', ['sim', 'nao']);
+            $table->integer('colesterol_total');
+            $table->integer('hdl');
+            $table->integer('pa');
+            $table->enum('historico', ['sim', 'nao']);
+            $table->decimal('risco_vascular', 8, 2);
             $table->timestamps();
         });
     }
