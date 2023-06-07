@@ -135,16 +135,38 @@ class PatientController extends Controller
             $risco += 1;
         }
 
-        // Pressão Arterial
-        if ($paciente->pa >= 140 / 90) {
+        // Pressão Arterial Sistolica
+        if ($paciente->pa > 160) {
             $risco += 1;
         }
+
+         // Pressão Arterial Diistolica
+        // if ($paciente->pa > 140) {
+        //     $risco += 1;
+        // }
 
         // Histórico Familiar
         if ($paciente->historico == 'sim') {
             $risco += 1;
         }
 
+
+        //Homem  > 55 + 1 
+        //Mulher > 65 + 1
+        //Tabagismo + 1
+        //Diabetes  + 1   
+        //Altura e Peso - Obsedidade IMC > 30 + 1
+        //LDL + 100 para todos os sexos + 1
+        //HDL no homem < 40 + 1  HDL na mulher < 46 + 1
+        //Nao HDl > 130 + 1 
+        //Trigcedios > 150 + 1
+        //Historico Familia em DCV + 1
+        //se fir diabetico ja é risco alto
+        //meta
+        //prescricoes
+        //nome -> dosagem -> quantas vezes ao dia 
+
+        //indicacoes e contraedicacoes - futuro
         return $risco;
     }
 }

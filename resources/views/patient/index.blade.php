@@ -1,92 +1,121 @@
 <x-app-layout>
-    <div class="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
-        <div class="max-w-md mx-auto">
-            <h1 class="text-2xl font-semibold mb-6">Formulário de Informações do Paciente</h1>
-
-            <form method="POST" action="{{ route('pacientes.store') }}">
-                @csrf
-
-                <div class="mb-4">
-                    <label for="nome" class="block text-sm font-medium text-gray-700 mb-2">Nome:</label>
-                    <input type="text" id="nome" name="nome" class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                </div>
-
-                <div class="mb-4">
-                    <label for="idade" class="block text-sm font-medium text-gray-700 mb-2">Idade:</label>
-                    <input type="number" id="idade" name="idade" class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                </div>
-
-                <div class="mb-4">
-                    <label for="sexo" class="block text-sm font-medium text-gray-700 mb-2">Sexo:</label>
-                    <select id="sexo" name="sexo" class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                        <option value="M">Masculino</option>
-                        <option value="F">Feminino</option>
-                    </select>
-                </div>
-
-                <div class="mb-4">
-                    <label for="tabagismo" class="block text-sm font-medium text-gray-700 mb-2">Tabagismo:</label>
-                    <select id="tabagismo" name="tabagismo" class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                        <option value="sim">Sim</option>
-                        <option value="nao">Não</option>
-                    </select>
-                </div>
-
-                <div class="mb-4">
-                    <label for="diabetes" class="block text-sm font-medium text-gray-700 mb-2">Diabetes:</label>
-                    <select id="diabetes" name="diabetes" class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                        <option value="sim">Sim</option>
-                        <option value="nao">Não</option>
-                    </select>
-                </div>
-
-                <div class="mb-4">
-                    <label for="colesterol_total" class="block text-sm font-medium text-gray-700 mb-2">Colesterol Total:</label>
-                    <input type="number" id="colesterol_total" name="colesterol_total" class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                </div>
-
-                <div class="mb-4">
-                    <label for="hdl" class="block text-sm font-medium text-gray-700 mb-2">HDL:</label>
-                    <input type="number" id="hdl" name="hdl" class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                </div>
-                <div class="mb-4">
-                    <label for="pa" class="block text-sm font-medium text-gray-700 mb-2">Pressão Arterial (PA):</label>
-                    <input type="text" id="pa" name="pa" class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                </div>
-
-                <div class="mb-4">
-                    <label for="historico" class="block text-sm font-medium text-gray-700 mb-2">Histórico Familiar:</label>
-                    <select id="historico" name="historico" class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                        <option value="sim">Sim</option>
-                        <option value="nao">Não</option>
-                    </select>
-                </div>
-
-                <div>
-                    <button type="submit" class="py-2 px-4 bg-indigo-500 text-white rounded-md hover:bg-indigo-600">Calcular Risco Vascular</button>
-                </div>
-            </form>
-        </div>
-        <div class="mt-6 bg-white shadow-sm rounded-lg divide-y">
-            @foreach ($pacientes as $patient)
-            <div class="p-6 flex space-x-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600 -scale-x-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                </svg>
-                <div class="flex-1">
-                    <div class="flex justify-between items-center">
-                        <div>
-                            <span class="text-gray-800">{{ $patient->user->name }}</span>
-                            <small class="ml-2 text-sm text-gray-600">{{ $patient->created_at->format('j M Y, g:i a') }}</small>
+    <div class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+        <div class="py-4">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="lg:flex space-y-2 items-center justify-between py-4 bg-white">
+                        <div class="pl-5">
+                            <h4 class="font-bold text-gray-700">
+                                PACIENTES
+                            </h4>
+                        </div>
+                        <div class="lg:flex space-x-2 pr-4">
+                            <button id="dropdownActionButton" data-dropdown-toggle="dropdownAction" class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-3 py-1.5 lg:block" type="button">
+                                Opções
+                            </button>
+                            <div class="hidden lg:block">
+                                <div id="dropdownAction" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
+                                    <ul class="py-1 text-sm text-gray-700" aria-labelledby="dropdownActionButton">
+                                        <li>
+                                            <a href="#" class="block px-4 py-2 hover:bg-gray-100">Exportar Dados</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                    <svg class="w-5 h-5 text-gray-500" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                                <input type="text" id="busca" class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="Busca">
+                            </div>
                         </div>
                     </div>
-                    <p class="mt-4 text-lg text-gray-900">{{ $patient->nome }}</p>
-                    <p class="mt-4 text-lg text-gray-900">{{ $patient->risco_vascular }}
-                    <p class="mt-4 text-lg text-gray-900">{{ $patient->resultado_risco }}</p>
-                    </p>
+                    <table class="w-full text-sm text-left text-gray-500">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">
+                                    Nome
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Idade
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Sexo
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Risco Vascular
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Data de Cadastro
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($pacientes as $patient)
+                            <tr class="bg-white border-b">
+                                <td class="px-6 py-4 text-gray-900 whitespace-nowrap">
+                                    <div class="text-base font-semibold">{{ $patient->nome }}</div>
+                                </td>
+
+                                <td class="px-6 py-4 text-gray-900 whitespace-nowrap">
+                                    <div class="text-base font-semibold">{{ $patient->idade }}</div>
+                                </td>
+
+                                <td class="px-6 py-4 text-gray-900 whitespace-nowrap">
+                                    <div class="text-base font-semibold">{{ $patient->sexo }}</div>
+                                </td>
+                                <td class="px-6 py-4 text-gray-900 whitespace-nowrap">
+                                    <div class="relative pt-1 mx-5">
+                                        <div class="overflow-hidden h-4 mb-4 text-xs flex rounded">
+                                            @if ($patient->risco_vascular <= 10) <div style="width: 100%" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-green-500">
+                                        </div>
+                                        @elseif ($patient->risco_vascular <= 20) <div style="width: 100%" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-yellow-500">
+                                    </div>
+                                    @else
+                                    <div style="width: 100%" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-500"></div>
+                                    @endif
+
                 </div>
             </div>
+            </td>
+            <td class="px-6 py-4">
+                <div class="flex items-center space-x-2">
+                    <div class="text-base font-semibold">{{ $patient->risco_vascular }}</div>
+                </div>
+            </td>
+            <td class="px-6 py-4">
+                {{ $patient->created_at->format('j M Y, g:i a') }}
+            </td>
+            </tr>
             @endforeach
+            </tbody>
+            </table>
         </div>
     </div>
 </x-app-layout>
+<script>
+    const inputBusca = document.querySelector('#busca');
+    inputBusca.addEventListener('input', () => {
+        const termoBusca = inputBusca.value.toLowerCase();
+        filtrarLinhas(termoBusca);
+    });
+
+    function filtrarLinhas(termo) {
+        const tbody = document.querySelector('table tbody');
+        const linhas = tbody.querySelectorAll('tr');
+
+        linhas.forEach((linha) => {
+            const textoLinha = linha.textContent.toLowerCase();
+            if (textoLinha.includes(termo)) {
+                linha.classList.remove('hidden');
+            } else {
+                linha.classList.add('hidden');
+            }
+        });
+    }
+</script>
