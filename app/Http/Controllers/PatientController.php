@@ -54,9 +54,10 @@ class PatientController extends Controller
         $paciente->sexo = $request->sexo;
         $paciente->tabagismo = $request->tabagismo;
         $paciente->diabetes = $request->diabetes;
-        $paciente->colesterol_total = $request->colesterol_total;
-        $paciente->hdl = $request->hdl;
-        $paciente->pa = $request->pa;
+        $paciente->altura = $request->altura;
+        $paciente->peso = $request->peso;
+        $paciente->pad = $request->pad;
+        $paciente->pas = $request->pas;
         $paciente->historico = $request->historico;
 
         $paciente->user_id = Auth::id();
@@ -105,14 +106,28 @@ class PatientController extends Controller
     {
         $risco = 0;
 
-        // Idade
-        if ($paciente->idade >= 40 && $paciente->idade <= 75) {
+        // homem > 55 anos e mulher > 65
+        if ($paciente->sexo == 'M' && $paciente->idade >= 55) {
             $risco += 1;
         }
 
-        // Sexo
-        if ($paciente->sexo == 'M') {
-            $risco += 2;
+        if ($paciente->sexo == 'F' && $paciente->idade >= 65) {
+            $risco += 1;
+        }
+
+        // historico familiar de doença cardiovascular + 
+        // homem > 55 anos e mulher > 65
+
+        if ($paciente->sexo == 'M' && $paciente->idade >= 55) {
+            if ($paciente->historico == 'sim') {
+                $risco += 1;
+            }
+        }
+
+        if ($paciente->sexo == 'F' && $paciente->idade >= 65) {
+            if ($paciente->historico == 'sim') {
+                $risco += 1;
+            }
         }
 
         // Tabagismo
@@ -120,48 +135,29 @@ class PatientController extends Controller
             $risco += 1;
         }
 
-        // Diabetes
-        if ($paciente->diabetes == 'sim') {
+        // PAS
+        if ($paciente->pas >= 140 && $paciente->pas <= 159) {
             $risco += 1;
         }
-
-        // Colesterol Total
-        if ($paciente->colesterol_total >= 240) {
-            $risco += 1;
-        }
-
-        // HDL
-        if ($paciente->hdl < 40) {
-            $risco += 1;
-        }
-
-        // Pressão Arterial Sistolica
-        if ($paciente->pa > 160) {
-            $risco += 1;
-        }
-
-         // Pressão Arterial Diistolica
-        // if ($paciente->pa > 140) {
-        //     $risco += 1;
-        // }
 
         // Histórico Familiar
         if ($paciente->historico == 'sim') {
             $risco += 1;
         }
 
+        if (($paciente->pas >= 140 && $paciente->pas <= 159) && ($paciente->pad >= 90 && $paciente->pad <= 99)) {
+            $risco += 1;
+        }
 
-        //Homem  > 55 + 1 
-        //Mulher > 65 + 1
-        //Tabagismo + 1
-        //Diabetes  + 1   
-        //Altura e Peso - Obsedidade IMC > 30 + 1
-        //LDL + 100 para todos os sexos + 1
-        //HDL no homem < 40 + 1  HDL na mulher < 46 + 1
-        //Nao HDl > 130 + 1 
-        //Trigcedios > 150 + 1
-        //Historico Familia em DCV + 1
-        //se fir diabetico ja é risco alto
+        if (($paciente->pas >= 160 && $paciente->pas <= 179) && ($paciente->pad >= 100 && $paciente->pad <= 109)) {
+            $risco += 2;
+        }
+
+        if ($paciente->doenca !== null) {
+            $risco += 4;
+        }
+
+
         //meta
         //prescricoes
         //nome -> dosagem -> quantas vezes ao dia 
