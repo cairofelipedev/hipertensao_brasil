@@ -97,9 +97,12 @@ class PatientController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Patient $patient)
+    public function destroy($id)
     {
-        //
+        $paciente = Patient::findOrFail($id);
+        $paciente->delete();
+
+        return redirect()->route('pacientes.index')->with('success', 'Paciente excluído com sucesso!');
     }
 
     private function calcularRiscoVascular($paciente)

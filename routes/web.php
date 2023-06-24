@@ -34,5 +34,6 @@ Route::resource('pacientes', PatientController::class)
     ->only(['index', 'store'])
     ->middleware(['auth', 'verified']);
 
+Route::delete('/pacientes/{paciente}', [PatientController::class, 'destroy'])->name('pacientes.destroy');
 
 require __DIR__ . '/auth.php';
