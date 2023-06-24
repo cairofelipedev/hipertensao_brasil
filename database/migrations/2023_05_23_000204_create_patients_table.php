@@ -16,11 +16,12 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('nome');
             $table->integer('idade');
+            $table->enum('sexo', ['M', 'F']);
             $table->enum('tabagismo', ['sim', 'nao']);
             $table->integer('peso');
             $table->integer('altura');
-            $table->integer('pad');
-            $table->integer('pas');
+            $table->integer('pad')->nullable();
+            $table->integer('pas')->nullable();
             $table->integer('doenca')->nullable();
             $table->enum('historico', ['sim', 'nao']);
             $table->decimal('risco_vascular', 8, 2);

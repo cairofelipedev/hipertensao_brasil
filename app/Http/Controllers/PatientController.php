@@ -53,7 +53,7 @@ class PatientController extends Controller
         $paciente->idade = $request->idade;
         $paciente->sexo = $request->sexo;
         $paciente->tabagismo = $request->tabagismo;
-        $paciente->diabetes = $request->diabetes;
+        $paciente->doenca = $request->doenca;
         $paciente->altura = $request->altura;
         $paciente->peso = $request->peso;
         $paciente->pad = $request->pad;
@@ -138,6 +138,12 @@ class PatientController extends Controller
         // PAS
         if ($paciente->pas >= 140 && $paciente->pas <= 159) {
             $risco += 1;
+        }
+
+        //IMC
+        $imc = $paciente->peso / (($paciente->altura / 100) ** 2);
+        if ($imc >= 30) {
+            $risco += 1; // Fator 4
         }
 
         // Histórico Familiar
