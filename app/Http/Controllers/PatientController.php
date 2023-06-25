@@ -14,24 +14,7 @@ class PatientController extends Controller
      */
     public function index(): View
     {
-        //
         $pacientes = Patient::all();
-
-        foreach ($pacientes as $paciente) {
-            // Realize o cálculo do risco vascular com base nas informações do paciente
-            $riscoVascular = $this->calcularRiscoVascular($paciente);
-            $paciente->risco_vascular = $riscoVascular;
-
-            // Determinar o resultado do risco vascular de acordo com as Diretrizes de 2020
-            if ($riscoVascular <= 10) {
-                $paciente->resultado_risco = 'Baixo Risco';
-            } elseif ($riscoVascular > 10 && $riscoVascular <= 20) {
-                $paciente->resultado_risco = 'Médio Risco';
-            } else {
-                $paciente->resultado_risco = 'Alto Risco';
-            }
-        }
-
         return view('patient.index', compact('pacientes'));
     }
 
@@ -73,11 +56,11 @@ class PatientController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Patient $patient)
+    public function show($id)
     {
-        //
+        $paciente = Patient::findOrFail($id);
+        return view('patient.show', compact('paciente'));
     }
-
     /**
      * Show the form for editing the specified resource.
      */

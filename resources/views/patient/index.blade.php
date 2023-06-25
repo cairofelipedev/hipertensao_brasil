@@ -75,35 +75,38 @@
                 <td class="px-6 py-4 text-gray-900 whitespace-nowrap">
                   <div class="relative pt-1 mx-5">
                     <div class="overflow-hidden h-4 mb-4 text-xs flex rounded">
-                      @if ($patient->risco_vascular <= 10) <div style="width: 100%" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-green-500">
+                      @if ($patient->risco_vascular <= 0) <div style="width: 100%" class="shadow-none flex 9]}flex-col text-center whitespace-nowrap text-white justify-center bg-green-500">
                     </div>
-                    @elseif ($patient->risco_vascular <= 20) <div style="width: 100%" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-yellow-500">
+                    @elseif ($patient->risco_vascular <= 2) <div style="width: 100%" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-yellow-500">
                   </div>
-                  @else
-                  <div style="width: 100%" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-500"></div>
-                  @endif
-                </td>
-                <td class="px-6 py-4">
-                  <div class="flex items-center space-x-2">
-                    <div class="text-base font-semibold">{{ $patient->risco_vascular }}</div>
-                  </div>
-                </td>
-                <td class="px-6 py-4">
-                  {{ $patient->created_at->format('j M Y, g:i a') }}
-                </td>
-                <td class="px-6 py-4">
-                  <form action="{{ route('pacientes.destroy', $patient->id) }}" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="text-red-600">Excluir</button>
-                  </form>
-                </td>
-              </tr>
-              @endforeach
-            </tbody>
-          </table>
+                  @elseif ($patient->risco_vascular <= 3) <div style="width: 100%" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-orange-500">
         </div>
+        @else
+        <div style="width: 100%" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-500"></div>
+        @endif
+        </td>
+        <td class="px-6 py-4">
+          <div class="flex items-center space-x-2">
+            <div class="text-base font-semibold">{{ $patient->risco_vascular }}</div>
+          </div>
+        </td>
+        <td class="px-6 py-4">
+          {{ $patient->created_at->format('j M Y, g:i a') }}
+        </td>
+        <td class="px-6 py-4">
+          <form action="{{ route('pacientes.destroy', $patient->id) }}" method="POST">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="text-red-600">Excluir</button>
+          </form>
+          <a href="{{ route('pacientes.show', $patient->id) }}">Ver perfil</a>
+        </td>
+        </tr>
+        @endforeach
+        </tbody>
+        </table>
       </div>
+    </div>
 </x-app-layout>
 <script>
   const inputBusca = document.querySelector('#busca');

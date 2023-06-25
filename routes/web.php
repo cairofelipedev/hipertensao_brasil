@@ -36,4 +36,6 @@ Route::resource('pacientes', PatientController::class)
 
 Route::delete('/pacientes/{paciente}', [PatientController::class, 'destroy'])->name('pacientes.destroy');
 
+Route::get('/paciente/{paciente}', [PatientController::class, 'show'])->name('pacientes.show');
+
 require __DIR__ . '/auth.php';
