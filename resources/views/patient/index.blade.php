@@ -10,16 +10,25 @@
               </h4>
             </div>
             <div class="lg:flex space-x-2 pr-4">
-              <button id="dropdownActionButton" data-dropdown-toggle="dropdownAction" class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-3 py-1.5 lg:block" type="button">
-                Opções
-              </button>
-              <div class="hidden lg:block">
-                <div id="dropdownAction" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
-                  <ul class="py-1 text-sm text-gray-700" aria-labelledby="dropdownActionButton">
-                    <li>
-                      <a href="#" class="block px-4 py-2 hover:bg-gray-100">Exportar Dados</a>
-                    </li>
-                  </ul>
+              <div class="flex flex-wrap gap-5 mt-2">
+                <div class="text-sm">
+                  <span class="bg-green-500 align-middle w-4 h-4 inline-block mr-1 -mt-1"></span>
+                  Sem Risco
+                </div>
+
+                <div class="text-sm">
+                  <span class="bg-yellow-500 align-middle w-4 h-4 inline-block mr-1 -mt-1"></span>
+                  Risco Baixo
+                </div>
+
+                <div class="text-sm">
+                  <span class="bg-orange-500 align-middle w-4 h-4 inline-block mr-1 -mt-1"></span>
+                  Risco Moderado
+                </div>
+
+                <div class="text-sm">
+                  <span class="bg-red-500 align-middle w-4 h-4 inline-block mr-1 -mt-1"></span>
+                  Risco Alto
                 </div>
               </div>
               <div class="relative">
